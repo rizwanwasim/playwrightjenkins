@@ -2,7 +2,11 @@
   "name": "playwrightjenkins",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+      "test": "playwright test", 
+      "install-playwright": "npx playwright install",
+      "build": "npm install && npm run install-playwright"
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
