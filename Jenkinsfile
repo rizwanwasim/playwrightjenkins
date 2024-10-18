@@ -75,6 +75,7 @@
 // -------------------------------------------------------------------------------------------------
 pipeline {
     agent any  // Use any available Jenkins agent
+
     stages {
         stage('Install Dependencies') {
             steps {
@@ -85,15 +86,19 @@ pipeline {
                 }
             }
         }
+
         stage('Help') {
             steps {
                 bat 'npx playwright test --help'
             }
         }
+
         stage('Run Tests') {
             steps {
-                // Run tests with the defined configuration
-                bat 'npx playwright test'
+                script {
+                    // Run tests with the defined configuration and generate the report
+                    bat 'npx playwright test --report=html'
+                }
             }
             post {
                 success {
@@ -106,6 +111,7 @@ pipeline {
                 }
             }
         }
+
         stage('Publish Report') {
             steps {
                 // Publish the HTML report
