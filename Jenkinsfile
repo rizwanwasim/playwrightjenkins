@@ -74,13 +74,12 @@
 // }
 // -------------------------------------------------------------------------------------------------
 pipeline {
-    agent any  // Use any available Jenkins agent
+    agent any 
     stages {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install dependencies
-                    bat 'npm i -D @playwright/test'
+                    bat 'npm install'
                     bat 'npx playwright install'
                 }
             }
@@ -92,15 +91,13 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                // Run tests with a single worker
-                bat 'npx playwright test --workers=1'
+                bat 'npx playwright test'
             }
             post {
-                success {
-                    archiveArtifacts(artifacts: 'homepage-*.png', followSymlinks: false)
+                success {}
+                    archiveArtifacts(artifacts: 'playwright-report/**', followSymlinks: false)
                     bat 'del *.png'  // Use `del` for deleting files on Windows
                 }
             }
         }
-    }
 }
